@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <rect width="800" height="450" fill="#a4a29a"/>
+  <!-- Concrete basement steps descending into water -->
+  <rect x="520" y="160" width="160" height="290" fill="#7d7b73"/>
+  <rect x="570" y="190" width="110" height="260" fill="#6a6861"/>
+  <rect x="620" y="220" width="60" height="230" fill="#595751"/>
+  
+  <!-- Muddy flood water line -->
+  <path d="M 0 260 Q 250 250 500 265 T 800 255 L 800 450 L 0 450 Z" fill="#716b54"/>
+  <path d="M 0 290 Q 300 275 600 295 T 800 285 L 800 450 L 0 450 Z" fill="#5f5945"/>
+</svg>

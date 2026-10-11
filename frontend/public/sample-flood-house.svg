@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <!-- Sky -->
+  <rect width="800" height="450" fill="#9ba8b2"/>
+  
+  <!-- Back Pole / Structure -->
+  <rect x="635" y="160" width="14" height="150" fill="#4d5357"/>
+  
+  <!-- Right shed / garage submerged -->
+  <rect x="475" y="240" width="145" height="120" fill="#4f3e35"/>
+  <rect x="515" y="260" width="40" height="45" fill="#24313b"/>
+
+  <!-- Main House Roof & Body -->
+  <polygon points="360,110 180,245 540,245" fill="#5c4538"/>
+  <rect x="220" y="245" width="280" height="120" fill="#5c4538"/>
+  
+  <!-- Main House Windows -->
+  <rect x="280" y="270" width="42" height="75" rx="3" fill="#202c36"/>
+  <rect x="330" y="270" width="42" height="75" rx="3" fill="#202c36"/>
+
+  <!-- Water layers (submerged first floor) -->
+  <path d="M 0 310 Q 200 300 400 325 T 800 315 L 800 450 L 0 450 Z" fill="#847c5d"/>
+  <path d="M 0 335 Q 240 320 480 345 T 800 330 L 800 450 L 0 450 Z" fill="#756c4d"/>
+  <path d="M 0 370 Q 300 355 550 380 T 800 365 L 800 450 L 0 450 Z" fill="#665c40"/>
+</svg>
