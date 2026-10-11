@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AidFlowProvider } from './context/AidFlowContext';
+import { DemoPlayerBar } from './components/DemoPlayerBar';
 
 // Requester flow pages
 import { RequesterLayout } from './pages/requester/RequesterLayout';
@@ -22,6 +23,9 @@ export function App() {
   return (
     <AidFlowProvider>
       <BrowserRouter>
+        {/* Floating Demo Player matching the 35s demo recording scrubber */}
+        <DemoPlayerBar />
+
         <Routes>
           {/* Default entrypoint goes to the Coordinator dashboard */}
           <Route path="/" element={<Navigate to="/coordinator" replace />} />
