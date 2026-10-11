@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Camera, Image, AlertTriangle, Check } from 'lucide-react';
+import '../../styles/common.css';
+import '../../styles/CitizenFlow.css';
 
+/**
+ * AddPhotosPage
+ * 
+ * Step 2 of Citizen Aid Request flow (optional).
+ * Includes an automated edge-quality check ("Too dark to see")
+ * to advise users if underexposed photos would impede ML damage grading.
+ */
 export const AddPhotosPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,12 +20,13 @@ export const AddPhotosPage: React.FC = () => {
   const [photoKept, setPhotoKept] = useState<boolean>(false);
 
   const handleFinish = () => {
+    // Navigate to real-time status tracker
     navigate(`/request/status/${requestId}`);
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      {/* Request sent confirmation banner */}
+    <div className="citizen-phone-wrapper">
+      {/* Confirmation of Step 1 Receipt */}
       <div
         style={{
           display: 'flex',
@@ -55,10 +65,10 @@ export const AddPhotosPage: React.FC = () => {
         <div style={{ fontSize: '0.85rem', color: '#68737d', fontWeight: 600, marginBottom: '0.15rem' }}>
           Step 2 of 2 · optional
         </div>
-        <h1 style={{ fontSize: '2.5rem', lineHeight: 1.05, marginBottom: '0.35rem' }}>
+        <h1 className="title-main" style={{ fontSize: '2.5rem' }}>
           Add photos of the damage
         </h1>
-        <p style={{ color: '#56606a', fontSize: '0.95rem' }}>
+        <p className="title-sub" style={{ fontSize: '0.95rem' }}>
           Photos help coordinators see what's happening.
         </p>
         <p style={{ color: '#16202a', fontSize: '0.95rem', fontWeight: 700, marginTop: '0.15rem' }}>
@@ -68,29 +78,9 @@ export const AddPhotosPage: React.FC = () => {
 
       {/* Uploaded photo with AI quality warning */}
       {hasPhotoAttached && (
-        <div
-          style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '12px',
-            border: '1px solid #e1dcce',
-            padding: '1rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.85rem',
-          }}
-        >
+        <div className="photo-qc-card">
           <div style={{ display: 'flex', gap: '1rem' }}>
-            {/* Dark image preview */}
-            <div
-              style={{
-                width: '105px',
-                height: '105px',
-                borderRadius: '8px',
-                overflow: 'hidden',
-                backgroundColor: '#151b22',
-                flexShrink: 0,
-              }}
-            >
+            <div className="photo-qc-preview-frame">
               <img
                 src="/sample-dark-photo.svg"
                 alt="Uploaded damage snapshot"
@@ -98,7 +88,6 @@ export const AddPhotosPage: React.FC = () => {
               />
             </div>
 
-            {/* Warning text */}
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <div
                 style={{
@@ -120,23 +109,12 @@ export const AddPhotosPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Action buttons */}
+          {/* Quick Retake / Keep options */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem' }}>
             <button
               type="button"
               onClick={() => setHasPhotoAttached(false)}
-              style={{
-                padding: '0.65rem',
-                borderRadius: '8px',
-                border: '1.5px solid #1f2a36',
-                backgroundColor: '#ffffff',
-                fontWeight: 700,
-                fontSize: '0.9rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.45rem',
-              }}
+              className="btn-secondary"
             >
               <Camera size={16} />
               Retake
@@ -160,7 +138,7 @@ export const AddPhotosPage: React.FC = () => {
         </div>
       )}
 
-      {/* Alternative photo options */}
+      {/* Primary capture buttons */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
         <button
           type="button"
@@ -205,22 +183,13 @@ export const AddPhotosPage: React.FC = () => {
         Up to 3 photos. They upload in the background, so you can close this page once you tap Upload.
       </p>
 
-      {/* Primary and secondary submission controls */}
+      {/* Submission Actions */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginTop: '0.5rem' }}>
         <button
           type="button"
           onClick={handleFinish}
-          style={{
-            width: '100%',
-            padding: '1rem',
-            borderRadius: '8px',
-            backgroundColor: '#c44d25',
-            color: '#ffffff',
-            fontSize: '1.05rem',
-            fontWeight: 700,
-            textAlign: 'center',
-            boxShadow: '0 4px 12px rgba(196, 77, 37, 0.25)',
-          }}
+          className="btn-primary"
+          style={{ width: '100%', padding: '1rem', fontSize: '1.05rem' }}
         >
           {hasPhotoAttached ? 'Upload 1 photo' : 'Done'}
         </button>
@@ -228,17 +197,8 @@ export const AddPhotosPage: React.FC = () => {
         <button
           type="button"
           onClick={handleFinish}
-          style={{
-            width: '100%',
-            padding: '0.85rem',
-            borderRadius: '8px',
-            backgroundColor: '#f2eee5',
-            color: '#1f2a36',
-            border: '1.5px solid #d5cebf',
-            fontSize: '0.95rem',
-            fontWeight: 700,
-            textAlign: 'center',
-          }}
+          className="btn-secondary"
+          style={{ width: '100%', padding: '0.85rem' }}
         >
           Skip photos
         </button>

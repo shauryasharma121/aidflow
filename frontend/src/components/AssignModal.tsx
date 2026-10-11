@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AidRequest } from '../types';
-import { useAidFlow } from '../context/AidFlowContext';
+import { useDispatch } from '../hooks/useDispatch';
 import { StatusTracker } from './StatusTracker';
 import { SeverityBadge } from './SeverityBadge';
 import { X } from 'lucide-react';
+import '../styles/common.css';
 
 interface AssignModalProps {
   request: AidRequest;
@@ -11,12 +12,17 @@ interface AssignModalProps {
   onAssigned?: (teamName: string) => void;
 }
 
+/**
+ * AssignModal
+ * 
+ * Dispatch dialog connecting a verified triage ticket with available field volunteer teams.
+ * Calculates proximity and shifts ticket status to 'Assigned'.
+ */
 export const AssignModal: React.FC<AssignModalProps> = ({ request, onClose, onAssigned }) => {
-  const { teams, assignTeamToRequest } = useAidFlow();
-  const [filterMode, setFilterMode] = useState<'available' | 'nearest'>('available');
+  const { teams, filterMode, setFilterMode, dispatchTeam, nearestAvailableTeam } = useDispatch(request);
 
   const handlePick = (teamId: string, teamName: string) => {
-    assignTeamToRequest(request.id, teamId);
+    dispatchTeam(teamId);
     if (onAssigned) {
       onAssigned(teamName);
     }
@@ -39,11 +45,10 @@ export const AssignModal: React.FC<AssignModalProps> = ({ request, onClose, onAs
       onClick={onClose}
     >
       <div
+        className="panel-card"
         style={{
           width: '100%',
           maxWidth: '560px',
-          backgroundColor: '#ffffff',
-          borderRadius: '16px',
           padding: '1.75rem',
           boxShadow: '0 20px 40px rgba(0,0,0,0.22)',
           position: 'relative',
@@ -53,33 +58,15 @@ export const AssignModal: React.FC<AssignModalProps> = ({ request, onClose, onAs
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.85rem', lineHeight: 1.1, marginBottom: '0.5rem' }}>
+            <h2 className="title-main" style={{ fontSize: '1.85rem', marginBottom: '0.5rem' }}>
               Assign {request.id}
             </h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', alignItems: 'center' }}>
               <SeverityBadge level={request.assignedSeverity} size="sm" />
-              <span
-                style={{
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  backgroundColor: '#f1ede4',
-                  padding: '0.2rem 0.55rem',
-                  borderRadius: '999px',
-                  color: '#343c44',
-                }}
-              >
+              <span className="badge-pill badge-neutral">
                 {request.needType}
               </span>
-              <span
-                style={{
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  backgroundColor: '#f1ede4',
-                  padding: '0.2rem 0.55rem',
-                  borderRadius: '999px',
-                  color: '#343c44',
-                }}
-              >
+              <span className="badge-pill badge-neutral">
                 {request.peopleCount} {request.peopleCount === 1 ? 'person' : 'people'}
               </span>
               <span style={{ fontSize: '0.8rem', color: '#68737d' }}>
@@ -132,29 +119,13 @@ export const AssignModal: React.FC<AssignModalProps> = ({ request, onClose, onAs
             </span>
             <button
               onClick={() => setFilterMode('available')}
-              style={{
-                fontSize: '0.82rem',
-                fontWeight: 600,
-                padding: '0.35rem 0.8rem',
-                borderRadius: '999px',
-                backgroundColor: filterMode === 'available' ? '#141d24' : '#ffffff',
-                color: filterMode === 'available' ? '#ffffff' : '#3d4650',
-                border: filterMode === 'available' ? 'none' : '1px solid #d5cec2',
-              }}
+              className={`sort-pill-btn ${filterMode === 'available' ? 'active' : ''}`}
             >
               Available Now
             </button>
             <button
               onClick={() => setFilterMode('nearest')}
-              style={{
-                fontSize: '0.82rem',
-                fontWeight: 600,
-                padding: '0.35rem 0.8rem',
-                borderRadius: '999px',
-                backgroundColor: filterMode === 'nearest' ? '#141d24' : '#ffffff',
-                color: filterMode === 'nearest' ? '#ffffff' : '#3d4650',
-                border: filterMode === 'nearest' ? 'none' : '1px solid #d5cec2',
-              }}
+              className={`sort-pill-btn ${filterMode === 'nearest' ? 'active' : ''}`}
             >
               Nearest First
             </button>
@@ -169,7 +140,7 @@ export const AssignModal: React.FC<AssignModalProps> = ({ request, onClose, onAs
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginBottom: '1.25rem' }}>
           {teams.map(team => {
             const isBooked = team.status === 'booked';
-            const isNearest = team.id === 'team-wr';
+            const isNearest = nearestAvailableTeam?.id === team.id;
 
             return (
               <div
@@ -187,7 +158,6 @@ export const AssignModal: React.FC<AssignModalProps> = ({ request, onClose, onAs
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                  {/* Team badge / avatar */}
                   <div
                     style={{
                       width: '38px',
@@ -255,16 +225,8 @@ export const AssignModal: React.FC<AssignModalProps> = ({ request, onClose, onAs
                   ) : (
                     <button
                       onClick={() => handlePick(team.id, team.name)}
-                      style={{
-                        padding: '0.45rem 1.25rem',
-                        borderRadius: '6px',
-                        backgroundColor: isNearest ? '#c44d25' : '#ffffff',
-                        color: isNearest ? '#ffffff' : '#16202a',
-                        border: isNearest ? 'none' : '1px solid #16202a',
-                        fontSize: '0.85rem',
-                        fontWeight: 600,
-                        transition: 'opacity 0.15s ease',
-                      }}
+                      className={isNearest ? 'btn-primary' : 'btn-secondary'}
+                      style={{ padding: '0.45rem 1.25rem', fontSize: '0.85rem' }}
                     >
                       Pick
                     </button>
@@ -277,21 +239,10 @@ export const AssignModal: React.FC<AssignModalProps> = ({ request, onClose, onAs
 
         {/* Footer info & Cancel */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #eee8dd', paddingTop: '1rem' }}>
-          <span style={{ fontSize: '0.82rem', color: '#68727d' }}>
+          <span style={{ fontSize: '0.82rem', color: '#68737d' }}>
             The team gets the task on their phones. Status moves to Assigned.
           </span>
-          <button
-            onClick={onClose}
-            style={{
-              padding: '0.45rem 1rem',
-              borderRadius: '6px',
-              border: '1px solid #cfc7ba',
-              backgroundColor: '#ffffff',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              color: '#2c353f',
-            }}
-          >
+          <button onClick={onClose} className="btn-secondary" style={{ padding: '0.45rem 1rem' }}>
             Cancel
           </button>
         </div>

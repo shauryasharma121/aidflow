@@ -1,0 +1,113 @@
+/* Common UI Component & Layout Utilities */
+
+.page-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.panel-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--brand-orange);
+  color: #ffffff;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+  box-shadow: 0 3px 8px rgba(196, 77, 37, 0.25);
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-orange-hover);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--text-primary);
+  border: 1.5px solid var(--text-primary);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #f7f5ef;
+}
+
+.btn-ghost {
+  color: var(--brand-orange);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn-ghost:hover {
+  text-decoration: underline;
+}
+
+/* Pills & Badges */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+.badge-dark {
+  background-color: var(--header-dark);
+  color: #ffffff;
+}
+
+.badge-neutral {
+  background-color: #f0ece3;
+  color: #404953;
+}
+
+.badge-danger {
+  background-color: var(--danger-light);
+  color: var(--danger-text);
+  font-weight: 700;
+}
+
+/* Typography Helpers */
+.title-main {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.title-sub {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin-top: 0.25rem;
+}

@@ -2,8 +2,17 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAidFlow } from '../../context/AidFlowContext';
 import { StatusTracker } from '../../components/StatusTracker';
-import { Check, MessageSquare, Copy, AlertCircle } from 'lucide-react';
+import { Check, MessageSquare, Copy } from 'lucide-react';
+import '../../styles/common.css';
+import '../../styles/CitizenFlow.css';
 
+/**
+ * RequestStatusPage
+ * 
+ * Citizen ticket tracking view.
+ * Displays the 4-phase lifecycle (Received -> Assigned -> Help on the way -> Done)
+ * and SMS callback notification details.
+ */
 export const RequestStatusPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -27,8 +36,8 @@ export const RequestStatusPage: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      {/* Big Success Header */}
+    <div className="citizen-phone-wrapper">
+      {/* Success Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.5rem' }}>
         <div
           style={{
@@ -45,47 +54,18 @@ export const RequestStatusPage: React.FC = () => {
         >
           <Check size={26} strokeWidth={3} />
         </div>
-        <h1 style={{ fontSize: '2.4rem', lineHeight: 1.1, textTransform: 'none' }}>
+        <h1 className="title-main" style={{ fontSize: '2.4rem' }}>
           We got your request
         </h1>
       </div>
 
       {/* Ticket Number Card */}
-      <div
-        style={{
-          backgroundColor: '#ffffff',
-          borderRadius: '14px',
-          border: '1px solid #e1dcce',
-          padding: '1.25rem 1.5rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-        }}
-      >
+      <div className="panel-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem' }}>
         <div>
-          <div
-            style={{
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              color: '#656f7a',
-              marginBottom: '0.2rem',
-            }}
-          >
+          <div className="metadata-label" style={{ marginBottom: '0.2rem' }}>
             YOUR TICKET NUMBER
           </div>
-          <div
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: '2.1rem',
-              fontWeight: 800,
-              color: '#151e28',
-              letterSpacing: '-0.02em',
-              lineHeight: 1.1,
-            }}
-          >
+          <div className="ticket-number-hero">
             {request.id}
           </div>
           <div style={{ fontSize: '0.85rem', color: '#56606a', marginTop: '0.25rem' }}>
@@ -95,19 +75,8 @@ export const RequestStatusPage: React.FC = () => {
 
         <button
           onClick={handleCopy}
-          style={{
-            padding: '0.55rem 1.1rem',
-            borderRadius: '8px',
-            border: '1.5px solid #d5cebf',
-            backgroundColor: '#ffffff',
-            fontWeight: 600,
-            fontSize: '0.88rem',
-            color: '#151e28',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.35rem',
-            transition: 'background-color 0.15s ease',
-          }}
+          className="btn-secondary"
+          style={{ padding: '0.55rem 1.1rem', fontSize: '0.88rem' }}
         >
           <Copy size={15} />
           <span>{copied ? 'Copied!' : 'Copy'}</span>
@@ -115,22 +84,14 @@ export const RequestStatusPage: React.FC = () => {
       </div>
 
       {/* Status Tracker Card */}
-      <div
-        style={{
-          backgroundColor: '#ffffff',
-          borderRadius: '14px',
-          border: '1px solid #e1dcce',
-          padding: '1.5rem',
-          boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-        }}
-      >
-        <h2 style={{ fontSize: '1.65rem', marginBottom: '1.25rem' }}>
+      <div className="panel-card">
+        <h2 className="title-main" style={{ fontSize: '1.65rem', marginBottom: '1.25rem' }}>
           Status
         </h2>
         <StatusTracker status={request.status as any} mode="vertical" />
       </div>
 
-      {/* Text message notice banner */}
+      {/* SMS notification notice */}
       <div
         style={{
           display: 'flex',
@@ -150,48 +111,23 @@ export const RequestStatusPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 911 Escalation Card */}
-      <div
-        style={{
-          backgroundColor: '#fbece8',
-          border: '1px solid #f2d4cd',
-          borderRadius: '10px',
-          padding: '0.85rem 1.25rem',
-          color: '#8b271d',
-          fontSize: '0.92rem',
-        }}
-      >
-        <strong>If things get worse</strong>, call <a href="tel:911" style={{ color: '#8b271d', fontWeight: 700, textDecoration: 'underline' }}>911</a>.
+      {/* 911 Escalation */}
+      <div className="danger-alert-box" style={{ fontSize: '0.92rem' }}>
+        <span>
+          <strong>If things get worse</strong>, call <a href="tel:911" style={{ color: 'inherit', fontWeight: 700, textDecoration: 'underline' }}>911</a>.
+        </span>
       </div>
 
       {/* Bottom Actions */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem', marginTop: '0.5rem' }}>
-        <button
-          onClick={() => navigate('/request')}
-          style={{
-            padding: '0.85rem',
-            borderRadius: '8px',
-            border: '1.5px solid #16202a',
-            backgroundColor: '#ffffff',
-            fontWeight: 700,
-            fontSize: '0.92rem',
-            color: '#16202a',
-          }}
-        >
+        <button onClick={() => navigate('/request')} className="btn-secondary">
           Update request
         </button>
 
         <button
           onClick={() => navigate('/request/photos', { state: { requestId: request.id } })}
-          style={{
-            padding: '0.85rem',
-            borderRadius: '8px',
-            border: '1.5px solid #d5cebf',
-            backgroundColor: '#f0ece3',
-            fontWeight: 700,
-            fontSize: '0.92rem',
-            color: '#16202a',
-          }}
+          className="btn-secondary"
+          style={{ backgroundColor: '#f0ece3', borderColor: '#d5cebf' }}
         >
           Add photos
         </button>

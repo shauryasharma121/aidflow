@@ -1,0 +1,125 @@
+/* Citizen Intake Mobile Flow Styles */
+
+.citizen-phone-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.danger-alert-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--danger-light);
+  border: 1px solid #f2d2ca;
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  color: var(--danger-text);
+  font-size: 0.95rem;
+}
+
+.need-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.55rem;
+}
+
+.need-toggle-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 0.5rem;
+  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid #d9d4c7;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.15s ease;
+  min-height: 82px;
+}
+
+.need-toggle-btn.selected {
+  background-color: var(--header-dark);
+  color: #ffffff;
+  border-color: var(--header-dark);
+  box-shadow: 0 3px 8px rgba(21, 33, 45, 0.2);
+}
+
+.stepper-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stepper-btn {
+  width: 54px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-dark);
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--border-dark);
+}
+
+.stepper-display {
+  width: 80px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-dark);
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--border-dark);
+}
+
+.input-field-standard {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-dark);
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #ffffff;
+  outline: none;
+}
+
+.input-field-standard:focus {
+  border-color: var(--brand-orange);
+}
+
+/* Photo Quality Warning Card */
+.photo-qc-card {
+  background-color: #ffffff;
+  border-radius: var(--radius-md);
+  border: 1px solid #e1dcce;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.photo-qc-preview-frame {
+  width: 105px;
+  height: 105px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background-color: #151b22;
+  flex-shrink: 0;
+}
+
+.ticket-number-hero {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
